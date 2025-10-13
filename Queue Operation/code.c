@@ -4,9 +4,9 @@
 int queue[SIZE];
 int front = -1, rear = -1;
 
-void insert(int value) {
+void enqueue(int value) {
     if (rear == SIZE - 1) {
-        printf("Queue Overflow! Cannot insert %d\n", value);
+        printf("Queue Overflow\n");
         return;
     }
     if (front == -1) {
@@ -16,9 +16,9 @@ void insert(int value) {
     queue[rear] = value;
     printf("Inserted %d\n", value);
 }
-void delete() {
+void dequeue() {
     if (front == -1 || front > rear) {
-        printf("Queue Underflow! Cannot delete\n");
+        printf("Queue Underflow\n");
         return;
     }
     printf("Deleted %d\n", queue[front]);
@@ -53,10 +53,10 @@ int main() {
             case 1:
                 printf("Enter value to insert: ");
                 scanf("%d", &value);
-                insert(value);
+                enqueue(value);
                 break;
             case 2:
-                delete();
+                dequeue();
                 break;
             case 3:
                 display();
@@ -65,7 +65,7 @@ int main() {
                 printf("Exiting program.\n");
                 return 0;
             default:
-                printf("Invalid choice! Please enter 1-4.\n");
+                printf("Invalid choice\n");
         }
     }
     return 0;
