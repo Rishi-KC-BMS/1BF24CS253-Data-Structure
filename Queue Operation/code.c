@@ -43,8 +43,9 @@ void display() {
 int main() {
     int choice, value;
     printf("\nOptions Available:\n");
-    printf("1. Insert\n2. Delete\n3. Display\n4. Exit\n");
+    printf("1. EnQueue\n2. DeQueue\n3. Display\n4. Exit\n");
     while (1) {
+        printf("---------------\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
