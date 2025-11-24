@@ -1,74 +1,92 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct node{
+struct node {
     int data;
     struct node* next;
 };
 
-struct node* create(int n){
-    struct node *head=NULL,*p,*q;
-    for(int i=0;i<n;i++){
-        p=malloc(sizeof(struct node));
-        scanf("%d",&p->data);
-        p->next=NULL;
-        if(head==NULL) head=p;
-        else q->next=p;
-        q=p;
+struct node* create(int n) {
+    struct node *head = NULL, *p, *q = NULL;
+    for(int i = 0; i < n; i++) {
+        p = malloc(sizeof(struct node));
+        scanf("%d", &p->data);
+        p->next = NULL;
+        if(head == NULL)
+            head = p;
+        else
+            q->next = p;
+        q = p;
     }
     return head;
 }
 
-void display(struct node* head){
-    while(head){
-        printf("%d ",head->data);
-        head=head->next;
+void display(struct node* head) {
+    while(head) {
+        printf("%d ", head->data);
+        head = head->next;
     }
     printf("\n");
 }
 
-struct node* sort(struct node* head){
-    struct node *i,*j;
+struct node* sort(struct node* head) {
+    struct node *i, *j;
     int t;
-    for(i=head;i;i=i->next)
-        for(j=i->next;j;j=j->next)
-            if(i->data>j->data){
-                t=i->data;
-                i->data=j->data;
-                j->data=t;
+    for(i = head; i; i = i->next)
+        for(j = i->next; j; j = j->next)
+            if(i->data > j->data) {
+                t = i->data;
+                i->data = j->data;
+                j->data = t;
             }
     return head;
 }
 
-struct node* reverse(struct node* head){
-    struct node *p=NULL,*c=head,*n;
-    while(c){
-        n=c->next;
-        c->next=p;
-        p=c;
-        c=n;
+struct node* reverse(struct node* head) {
+    struct node *prev = NULL, *curr = head, *next;
+    while(curr) {
+        next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
     }
-    return p;
+    return prev;
 }
 
-struct node* concat(struct node* a,struct node* b){
-    if(a==NULL) return b;
-    struct node* t=a;
-    while(t->next) t=t->next;
-    t->next=b;
+struct node* concat(struct node* a, struct node* b) {
+    if(a == NULL) return b;
+    struct node* t = a;
+    while(t->next)
+        t = t->next;
+    t->next = b;
     return a;
 }
 
-int main(){
-    int n,m;
-    scanf("%d",&n);
-    struct node* A=create(n);
-    scanf("%d",&m);
-    struct node* B=create(m);
-    A=sort(A);
+int main()
+{
+
+    int n, m;
+    printf("\nEnter Size of list A : ");
+    scanf("%d", &n);
+    printf("\nEnter %d element(s) of list A : \n",n);
+    struct node* A = create(n);
+
+    printf("\nSorted List A : ");
+    A = sort(A);
+    display(C);
+
+    printf("\nReversed List A : ");
+    A = reverse(A);
     display(A);
-    A=reverse(A);
+
+    printf("\nEnter Size of list B : ");
+    scanf("%d", &n);
+    printf("\nEnter %d element(s) of list B : \n",n);
+    struct node* B = create(n);
+
+    printf("\List A + B",n);
+    A = concat(A, B);
     display(A);
-    A=concat(A,B);
-    display(A);
+
+    return 0;
 }
