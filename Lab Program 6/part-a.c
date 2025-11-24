@@ -84,7 +84,7 @@ int main()
     printf("\nEnter %d element(s) of list B : \n",n);
     struct node* B = create(n);
 
-    printf("\List A + B",n);
+    printf("\List A + B : ",n);
     A = concat(A, B);
     display(A);
 
