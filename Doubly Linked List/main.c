@@ -3,87 +3,110 @@
 
 struct node {
     int data;
-    struct node *prev;
-    struct node *next;
+    struct node* prev;
+    struct node* next;
 };
 
 struct node* create(struct node* head, int data) {
-    struct node* newnode = (struct node*)malloc(sizeof(struct node));
+    struct node* newnode = malloc(sizeof(struct node));
     newnode->data = data;
     newnode->prev = NULL;
     newnode->next = NULL;
-    if (!head) return newnode;
+
+    if (head == NULL)
+        return newnode;
+
     struct node* temp = head;
-    while (temp->next) temp = temp->next;
+    while (temp->next != NULL)
+        temp = temp->next;
+
     temp->next = newnode;
     newnode->prev = temp;
+
     return head;
 }
 
-struct node* insert_left(struct node* head, int target, int value) {
-    struct node* temp = head;
-    while (temp && temp->data != target) temp = temp->next;
-    if (!temp) return head;
-    struct node* newnode = (struct node*)malloc(sizeof(struct node));
+struct node* insert_left(struct node* head, int value) {
+    struct node* newnode = malloc(sizeof(struct node));
     newnode->data = value;
-    newnode->prev = temp->prev;
-    newnode->next = temp;
-    if (temp->prev) temp->prev->next = newnode;
-    else head = newnode;
-    temp->prev = newnode;
-    return head;
+    newnode->prev = NULL;
+    newnode->next = head;
+
+
+    if (head != NULL)
+        head->prev = newnode;
+
+    return newnode;
 }
 
 struct node* delete_value(struct node* head, int value) {
     struct node* temp = head;
-    while (temp && temp->data != value) temp = temp->next;
-    if (!temp) return head;
-    if (temp->prev) temp->prev->next = temp->next;
-    else head = temp->next;
-    if (temp->next) temp->next->prev = temp->prev;
+
+    while (temp != NULL && temp->data != value)
+        temp = temp->next;
+
+    if (temp == NULL)
+    {
+        return head;
+        printf("Value not found \n");
+    }
+
+    if (temp->prev == NULL)
+        head = temp->next;
+    else
+        temp->prev->next = temp->next;
+
+    if (temp->next != NULL)
+        temp->next->prev = temp->prev;
+
     free(temp);
     return head;
 }
 
 void display(struct node* head) {
     struct node* temp = head;
-    while (temp) {
+    while (temp != NULL) {
         printf("%d ", temp->data);
         temp = temp->next;
     }
     printf("\n");
 }
 
+
 int main() {
     struct node* head = NULL;
-    int choice, val, target;
+    int choice, val;
+
+    printf("\n1. Create Node \n2. Insert at Left\n3. Delete Value\n4. Display\n5. Exit\n");
 
     while (1) {
-        printf("\n1. Create Node\n2. Insert Left of Node\n3. Delete Value\n4. Display and Exit\nEnter choice: ");
+        printf("\nEnter choice : ");
         scanf("%d", &choice);
 
         if (choice == 1) {
-            printf("Enter value to insert: ");
+            printf("Enter value : ");
             scanf("%d", &val);
             head = create(head, val);
-        } 
+        }
         else if (choice == 2) {
-            printf("Enter target value: ");
-            scanf("%d", &target);
-            printf("Enter new value: ");
+            printf("Enter value to insert : ");
             scanf("%d", &val);
-            head = insert_left(head, target, val);
-        } 
+            head = insert_left(head, val);
+        }
         else if (choice == 3) {
             printf("Enter value to delete: ");
             scanf("%d", &val);
             head = delete_value(head, val);
-        } 
+        }
         else if (choice == 4) {
             printf("List: ");
             display(head);
+
+        }
+         else if (choice == 5) {
             break;
-        } 
+
+        }
         else {
             printf("Invalid choice\n");
         }
